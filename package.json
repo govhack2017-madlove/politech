@@ -1,0 +1,24 @@
+{
+  "name": "politech",
+  "version": "1.0.0",
+  "description": "GovHack 2017 Brisbane",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/govhack2017-madlove/politech.git"
+  },
+  "author": "Billy Schulze, Anthony Love, Reuben Madden, Nicole Khor",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/govhack2017-madlove/politech/issues"
+  },
+  "homepage": "https://github.com/govhack2017-madlove/politech#readme",
+  "dependencies": {
+    "body-parser": "^1.17.2",
+    "express": "^4.15.3",
+    "request": "^2.81.0"
+  }
+}
