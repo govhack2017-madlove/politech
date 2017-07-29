@@ -171,10 +171,6 @@ function decideResponse(sender, text) {
     if (matches !=  null) {
         let dateString = matches[3] + '-' + matches[2] + '-' + matches[1];
         happening(sender, dateString);
-<<<<<<< Updated upstream
-        
-=======
->>>>>>> Stashed changes
         return;
     }
 
