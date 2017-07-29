@@ -194,7 +194,8 @@ function happening(sender) {
 
             for (let i = 0; i < a; i++) {
                 let div = values[i];
-                if (!div.name.startsWith("Motion")) {
+                if (!div.name.startsWith("Motion")
+                    && div.name.indexOf("Second Reading") == -1) {
                     goodValues.push(values[i]);
                 }
             }
