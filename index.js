@@ -245,7 +245,16 @@ function happening(sender) {
                                 let member = div.votes[j].member.first_name + " " + div.votes[j].member.last_name;
                                 let vote = div.votes[j].vote;
                                 let number = div.number;
-                                sendTextLink(sender, member + " voted " + vote + " on " + title + ".", [
+                                let ayes = div.aye_votes;
+                                let nos = div.no_votes;
+                                let percentage = ayes/nos * 100;
+                                let message = member + "voted" + vote + " on " + title + ". ";
+                                if (ayes >= nos) {
+                                    message += "The division passed with " + percentage + "\%.";
+                                } else {
+                                    message = "The division failed with " + percentage + "\%.";
+                                }
+                                sendTextLink(sender, message, [
                                     {
                                         "type": "web_url",
                                         "url": "https://theyvoteforyou.org.au/divisions/representatives/2017-06-21/" + number,
@@ -262,6 +271,7 @@ function happening(sender) {
                                         "title": "Disapprove",
                                     }
                                 ]);
+
                                 break;
                             }
                         }
