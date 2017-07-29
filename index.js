@@ -194,7 +194,7 @@ function happening(sender) {
 
                 let title = div.name;
 
-                for (let j = 0; j < div.votes; j++) {
+                for (let j = 0; j < div.votes.length; j++) {
                     console.log(div.votes[j].member.electorate);
                     if (div.votes[j].member.electorate == "Wentworth") {
                         console.log(div.votes[j]);
