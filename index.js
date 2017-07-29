@@ -167,10 +167,10 @@ function decideResponse(sender, text) {
 
     let matches = text.match(re);
 
-    if (matches.length != 0) {
+    if (matches !=  null) {
         let dateString = matches[3] + '-' + matches[2] + '-' + matches[1];
         happening(sender, dateString);
-        console.log(matches.length);
+        
         return;
     }
 
