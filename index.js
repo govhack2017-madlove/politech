@@ -140,12 +140,12 @@ function decideResponse(sender, text) {
             });
             break;
         default:
-            sendText(sender, "Sorry i don't understand that.")
+            sendText(sender, "Sorry i don't understand that.");
     }
 }
 
 function getDivision(postcode) {
-    let div = divisions[postcode];
+    let div = divisions[postcode.toString()];
     let max = 0;
     let division = null;
     for (let property in div) {
