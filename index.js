@@ -1,9 +1,30 @@
+const mongoose = require("mongoose");
 const express = require('express');
 const bodyParser = require('body-parser');
 const request = require('request');
 require('dotenv').config();
 
 const app = express();
+
+// mongodb
+let User = require('./models/user');
+
+let mongoOptions = {
+    server: {
+        socketOptions: {
+            keepAlive: 300000,
+            connectTimeoutMS: 30000
+        }
+    },
+    replset: {
+        socketOptions: {
+            keepAlive: 300000,
+            connectTimeoutMS : 30000
+        }
+    }
+};
+mongoose.connect(process.env.MONGO_URI, mongoOptions);
+
 
 app.set('port', (process.env.PORT || 5000));
 
@@ -38,6 +59,9 @@ app.post('/webhook/', function(req, res) {
         if (event.message && event.message.text) {
             let text = event.message.text;
             console.log(event, sender, text);
+            if (text.length == 4) {
+                postcodeTest(sender);
+            }
             sendText(sender, "Text echo: " + text.substring(0, 100));
         }
     }
@@ -63,6 +87,20 @@ function sendText(sender, text) {
     });
 }
 
+function postcodeTest(sender) {
+    User.findOne({userid: sender}, function(err, user) {
+        if (err) console.log(err);
+        if (!user) {
+            let user = new User({userid: sender, postcode: 6666});
+            user.save(function (err) {
+                if (err) console.log(err);
+            });
+        } else {
+            sendText(sender, "Your postcode is " + user.postcode);
+        }
+    })
+}
+
 app.listen(app.get('port'), function() {
-    console.log("running: port")
+    console.log("running: port");
 });
