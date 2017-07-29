@@ -3,8 +3,7 @@ const mongoose = require('mongoose');
 let approvalSchema = new mongoose.Schema({
     electorate: {
         type: String,
-        required: true,
-        unique: true
+        required: true
     },
     date: {
         // YYYY-MM-DD
