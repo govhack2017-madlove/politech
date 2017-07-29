@@ -19,6 +19,7 @@ app.get('/', function(req, res) {
 
 // Facebook
 let token = process.env.FACEBOOK_TOKEN;
+let access_token = process.env.ACCESS_TOKEN;
 
 app.get('/webhook/', function(req, res) {
     if (req.query['hub.verify_token'] === token) {
@@ -43,8 +44,7 @@ app.post('/webhook/', function(req, res) {
 function sendText(sender, text) {
     let messageData = {text: text};
     request({
-        url: "https://graph.facebook.com/v2.6/me/messages",
-        qs : {access_token: token},
+        url: "https://graph.facebook.com/v2.6/me/messages?access_token=" + access_token,
         method: "POST",
         json: {
             recipient: {id: sender},
