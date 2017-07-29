@@ -190,16 +190,18 @@ function happening(sender) {
             console.log("HERE");
             let a = values.length;
 
+            let goodValues = []
+
             for (let i = 0; i < a; i++) {
                 let div = values[i];
-                if (div.name.startsWith("Motion")) {
-                    values.splice(i, 1);
-                    a -= 1;
+                if (!div.name.startsWith("Motion")) {
+                    goodValues.push(values[i]);
                 }
             }
 
-            for (let i = 0; i < values.length; i++) {
-                let div = values[i];
+
+            for (let i = 0; i < goodValues.length; i++) {
+                let div = goodValues[i];
 
                 let title = div.name;
 
