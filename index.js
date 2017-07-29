@@ -140,6 +140,7 @@ function decideResponse(sender, text) {
 }
 
 function getDivisions(postcode) {
+    console.log(divisions[postcode]);
     return JSON.stringify(divisions[postcode]);
 }
 
