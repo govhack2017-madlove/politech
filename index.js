@@ -142,7 +142,7 @@ function decidePostback(sender, payload) {
        } else {
            Approval.findOne({electorate: user.division, date: data[1], id: data[2]}, function(err, approval) {
                if (err) console.log(err);
-			   sendText(sender, "Your feedback was sent to your local member of parliament.");
+			   sendText(sender, "Your feedback will be sent to your MP.");
                if (!approval) {
                    console.log(user.division, data);
                    let approval = new Approval({electorate: user.division, date: data[1], id: data[2]});
