@@ -192,7 +192,7 @@ function happening(sender) {
             for (let i = 0; i < values.length; i++) {
                 let div = values[i];
                 if (div.name.startsWith("Motion")) {
-                    values.remove(i);
+                    values.splice(i, 1);
                 }
             }
 
