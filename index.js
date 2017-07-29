@@ -126,11 +126,11 @@ function decideResponse(sender, text) {
 
     switch (text) {
         case "what is my postcode":
-            getPostcode(sender, function(postcode) {
-                if (postcode == null) {
+            getUser(sender, function(user) {
+                if (user == null) {
                     sendText(sender, "You have not set your postcode. You can set you postcode by simply sending it to me.")
                 } else {
-                    sendText(sender, "Your postcode is " + postcode + ".");
+                    sendText(sender, "Your postcode is " + postcode + " and your division is " + user.division + ".");
                 }
             });
             break;
@@ -139,33 +139,45 @@ function decideResponse(sender, text) {
     }
 }
 
-function getDivisions(postcode) {
-    console.log(divisions[postcode]);
-    return JSON.stringify(divisions[postcode]);
+function getDivision(postcode) {
+    let div = divisions[postcode];
+    let max = 0;
+    let division = null;
+    for (let property in div) {
+        if (div.hasOwnProperty(property)) {
+            if (div[property] > max) {
+                max = div[property];
+                division = property;
+            }
+        }
+    }
+
+    return division;
 }
 
-function getPostcode(sender, callback) {
+function getUser(sender, callback) {
     User.findOne({userid: sender}, function(err, user) {
         if (err) console.log(err);
         if (!user) {
             callback(null);
         } else {
-            console.log(user.postcode);
-            callback(user.postcode);
+            callback(user);
         }
     })
 }
 
 function setPostcode(sender, postcode) {
+    let division = getDivision(postcode);
     User.findOne({userid: sender}, function(err, user) {
         if (err) console.log(err);
         if (!user) {
-            let user = new User({userid: sender, postcode: postcode});
+            let user = new User({userid: sender, postcode: postcode, division: division});
             user.save(function (err) {
                 if (err) console.log(err);
             });
         } else {
             user.postcode = postcode;
+            user.division = division;
             user.save(function (err) {
                 if (err) console.log(err);
             })

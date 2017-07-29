@@ -11,7 +11,8 @@ let userSchema = new mongoose.Schema({
         required: true
     },
     division: {
-        type: String
+        type: String,
+        required: true
     }
 });
 
