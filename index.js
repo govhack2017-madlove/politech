@@ -148,12 +148,10 @@ function getDivision(postcode) {
     let div = divisions[postcode.toString()];
     let max = 0;
     let division = null;
-    for (let property in div) {
-        if (div.hasOwnProperty(property)) {
-            if (div[property] > max) {
-                max = div[property];
-                division = property;
-            }
+    for (let i = 0; i < div.length; i++) {
+        if (div[property] > max) {
+            max = div[property];
+            division = property;
         }
     }
 
