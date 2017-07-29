@@ -282,7 +282,7 @@ function happening(sender, dateString) {
                                 sendTextLink(sender, message, [
                                     {
                                         "type": "web_url",
-                                        "url": "https://theyvoteforyou.org.au/divisions/representatives/2017-06-21/" + number,
+                                        "url": "https://theyvoteforyou.org.au/divisions/representatives/" + dateString + "/" + number,
                                         "title": "See More",
                                     },
                                     {
