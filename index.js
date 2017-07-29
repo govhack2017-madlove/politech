@@ -193,11 +193,11 @@ function happening(sender) {
                 let title = div.name;
 
                 for (let j = 0; j < div.votes; j++) {
-                    console.log(div.votes[i].member.electorate);
-                    if (div.votes[i].member.electorate == "Wentworth") {
-                        console.log(div.votes[i]);
-                        let member = div.votes[i].member.first_name + " " + div.votes[i].member.last_name;
-                        let vote = div.votes[i].vote;
+                    console.log(div.votes[j].member.electorate);
+                    if (div.votes[j].member.electorate == "Wentworth") {
+                        console.log(div.votes[j]);
+                        let member = div.votes[j].member.first_name + " " + div.votes[j].member.last_name;
+                        let vote = div.votes[j].vote;
                         sendText(sender, member + "voted " + vote + " on " + title + ".");
                         break;
                     }
