@@ -59,13 +59,14 @@ app.post('/webhook/', function(req, res) {
     for (let i = 0; i < messaging_events.length; i++) {
         let event = messaging_events[i];
         let sender = event.sender.id;
-        if (event.message && event.message.text) {
+        if (event.postback) {
+            console.log(event.postback.payload);
+            decidePostback(sender, event.postback.payload);
+        } else if (event.message && event.message.text) {
             let text = event.message.text;
             console.log(event, sender, text);
             if (event.message.is_echo) {
                 // do nothing
-            } else if (event.postback) {
-                decidePostback(sender, event.postback.payload);
             } else {
                 decideResponse(sender, text);
             }
