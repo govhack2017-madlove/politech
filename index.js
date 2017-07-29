@@ -164,11 +164,12 @@ function decideResponse(sender, text) {
         return;
     }
 
-    let re = /what happened on (\d\d)[\/\-_](\d\d)[]\/\-_](\d\d\d\d)/g;
+    let re = /what happened on (\d\d)[\/\-_](\d\d)[]\/\-_](\d\d\d\d)/;
 
-    let matches = text.match(re);
+    let matches = re.exec(text);
 
     if (matches !=  null) {
+        console.log(matches);
         let dateString = matches[3] + '-' + matches[2] + '-' + matches[1];
         happening(sender, dateString);
         return;
