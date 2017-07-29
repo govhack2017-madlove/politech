@@ -189,13 +189,13 @@ function happening(sender) {
             console.log(values);
 
             for (let i = 0; i < values.length; i++) {
-                let hardcode = "Oxley";
+                let hardcode = "Wentworth";
                 let div = values[i];
 
                 let title = div.name;
 
                 for (let j = 0; j < div.votes; j++) {
-                    if (div.votes[i].member.electorate = hardcode) {
+                    if (div.votes[i].member.electorate == hardcode) {
                         let member = div.votes[i].member.first_name + " " + div.votes[i].member.last_name;
                         let vote = div.votes[i].vote;
                         sendText(sender, member + "voted " + vote + " on " + title + ".");
