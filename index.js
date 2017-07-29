@@ -7,7 +7,7 @@ require('dotenv').config();
 const app = express();
 
 // mongodb
-let User = require('./models/user');
+let User = require('./models/users');
 
 let mongoOptions = {
     server: {
