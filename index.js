@@ -187,6 +187,8 @@ function happening(sender) {
 
         Promise.all(promises).then(values => {
 
+            console.log("HERE");
+
             for (let i = 0; i < values.length; i++) {
                 let div = values[i];
 
