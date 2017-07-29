@@ -175,6 +175,10 @@ function decideResponse(sender, text) {
         case "what happened today?":
             happening(sender, "2017-06-21");
             break;
+        case "what happened yesterday":
+        case "what happened yesterday?":
+            happening(sender, "2017-06-20");
+            break;
         default:
             sendText(sender, "Sorry I don't understand that.");
     }
