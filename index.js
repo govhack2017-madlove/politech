@@ -250,9 +250,9 @@ function happening(sender) {
                                 let percentage = Math.round(ayes/(nos+ayes) * 100);
                                 let message = member + "voted" + vote + " on " + title + ". ";
                                 if (ayes >= nos) {
-                                    message += "The division passed with " + percentage + "\%.";
+                                    message = member + "voted" + vote + " on " + title + ". " + "The division passed with " + percentage + "\%.";
                                 } else {
-                                    message = "The division failed with " + percentage + "\%.";
+                                    message = member + "voted" + vote + " on " + title + ". " + "The division failed with " + percentage + "\%.";
                                 }
                                 sendTextLink(sender, message, [
                                     {
