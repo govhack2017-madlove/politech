@@ -136,6 +136,7 @@ function getPostcode(sender) {
         if (!user) {
             return null;
         } else {
+            console.log(user.postcode);
             return user.postcode;
         }
     })
