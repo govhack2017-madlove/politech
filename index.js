@@ -148,6 +148,7 @@ function decideResponse(sender, text) {
 	words = text.split(' ');
 	for (var i = 0; i < words.length; i++) {
 		if(words[i].length <= 4 && words[i].length >= 3 && !isNaN(words[i])) {
+			let num = parseInt(words[i]);
 			setPostcode(sender, num);
 			sendText(sender, "You have set your postcode to " + num + ".");
 			sendText(sender, getDivision(num));
