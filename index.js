@@ -98,6 +98,33 @@ function sendText(sender, text) {
     });
 }
 
+function sendTextLink(sender, text, link, url) {
+    let messageData = {text: text};
+    request({
+        url: "https://graph.facebook.com/v2.6/me/messages?access_token=" + access_token,
+        method: "POST",
+        json: {
+            recipient: {id: sender},
+            message : messageData,
+            buttons:[
+                {
+                    "type":"web_url",
+                    "url":url,
+                    "title":link,
+                    "webview_height_ratio": "compact"
+                }
+            ]
+        }
+    }, function(error, response, body) {
+        if (error) {
+            console.log("sending error");
+        } else if (response.body.error) {
+            console.log(response.body.error);
+            console.log("response body error");
+        }
+    });
+}
+
 function postcodeTest(sender) {
     User.findOne({userid: sender}, function(err, user) {
         if (err) console.log(err);
@@ -205,7 +232,8 @@ function happening(sender) {
                                 console.log(div.votes[j]);
                                 let member = div.votes[j].member.first_name + " " + div.votes[j].member.last_name;
                                 let vote = div.votes[j].vote;
-                                sendText(sender, member + " voted " + vote + " on " + title + ".");
+                                let number = div.number;
+                                sendTextLink(sender, member + " voted " + vote + " on " + title + ".", "See More", "https://theyvoteforyou.org.au/divisions/representatives/2017-06-21/" + number);
                                 break;
                             }
                         }
