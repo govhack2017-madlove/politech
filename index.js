@@ -59,10 +59,14 @@ app.post('/webhook/', function(req, res) {
         if (event.message && event.message.text) {
             let text = event.message.text;
             console.log(event, sender, text);
+            decideResponse(sender, text);
+            /*
             if (text.length == 4) {
                 postcodeTest(sender);
+            } else {
+                sendText(sender, "Text echo: " + text.substring(0, 100));
             }
-            sendText(sender, "Text echo: " + text.substring(0, 100));
+            */
         }
     }
     res.sendStatus(200)
@@ -97,6 +101,62 @@ function postcodeTest(sender) {
             });
         } else {
             sendText(sender, "Your postcode is " + user.postcode);
+        }
+    })
+}
+
+function decideResponse(sender, text) {
+    text = text.toLowerCase();
+
+    // check if postcode entered
+    if (text.length == 4 && +text > 999 && +text < 10000) {
+        setPostcode(sender, +text);
+        return;
+    }
+
+    switch (text) {
+        case "what is my postcode":
+            let postcode = postcode(sender);
+            if (postcode == null) {
+                sendText(sender, "You have not set your postcode. You can set you postcode by simply sending it to me.")
+            } else {
+                sendText(sender, "Your postcode is " + postcode + ".");
+            }
+        default:
+            sendText(sender, "Sorry i don't understand that.")
+    }
+}
+
+function postcode(sender) {
+    User.findOne({userid: sender}, function(err, user) {
+        if (err) console.log(err);
+        if (!user) {
+            let user = new User({userid: sender, postcode: postcode});
+            user.save(function (err) {
+                if (err) console.log(err);
+            });
+        } else {
+            user.postcode = postcode;
+            user.save(function (err) {
+                if (err) console.log(err);
+            })
+        }
+    })
+}
+
+function setPostcode(sender, postcode) {
+    User.findOne({userid: sender}, function(err, user) {
+        if (err) console.log(err);
+        if (!user) {
+            let user = new User({userid: sender, postcode: postcode});
+            user.save(function (err) {
+                if (err) console.log(err);
+            });
+        } else {
+            user.postcode = postcode;
+            user.save(function (err) {
+                if (err) console.log(err);
+            })
         }
     })
 }
