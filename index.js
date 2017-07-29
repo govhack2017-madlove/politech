@@ -146,7 +146,7 @@ function decideResponse(sender, text) {
     text = text.toLowerCase();
 	
 	words = text.split(' ');
-	for (int i = 0; i < words.length; i++) {
+	for (var i = 0; i < words.length; i++) {
 		if(words[i].length <= 4 && words[i].length >= 3 && !isNaN(words[i])) {
 			setPostcode(sender, num);
 			sendText(sender, "You have set your postcode to " + num + ".");
