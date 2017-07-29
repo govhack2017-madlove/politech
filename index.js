@@ -180,7 +180,7 @@ function decideResponse(sender, text) {
         case "what is my postcode?":
             getUser(sender, function(user) {
                 if (user == null) {
-                    sendText(sender, "You have not set your postcode. You can set you postcode by simply sending it to me.")
+                    sendText(sender, "You have not set your postcode. You can set your postcode by simply sending it to me.")
                 } else {
                     sendText(sender, "Your postcode is " + user.postcode + " and your division is " + user.division + ".");
                 }
@@ -251,7 +251,9 @@ function happening(sender, dateString) {
                     goodValues.push(values[i]);
                 }
             }
-
+            if (goodValues.length == 0) {
+                sendText(sender, "Your local MP didn't partake in any votes on that day");
+            }
 
             for (let i = 0; i < goodValues.length; i++) {
                 let div = goodValues[i];
