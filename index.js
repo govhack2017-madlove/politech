@@ -113,7 +113,7 @@ function decideResponse(sender, text) {
     if (text.length == 4 && num > 999) {
         setPostcode(sender, num);
         sendText(sender, "You have set your postcode to " + num + ".");
-        sendText(sender, getDivisions(postcode));
+        sendText(sender, getDivisions(num));
         return;
     }
 
