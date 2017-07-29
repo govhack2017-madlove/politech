@@ -168,6 +168,7 @@ function getUser(sender, callback) {
 
 function setPostcode(sender, postcode) {
     let division = getDivision(postcode);
+    division = division ? division : "none";
     User.findOne({userid: sender}, function(err, user) {
         if (err) console.log(err);
         if (!user) {
