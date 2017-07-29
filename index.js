@@ -142,14 +142,18 @@ function postcodeTest(sender) {
 function decideResponse(sender, text) {
     // check if postcode entered
     let num = parseInt(text);
-    if (text.length == 4 && num > 999) {
-        setPostcode(sender, num);
-        sendText(sender, "You have set your postcode to " + num + ".");
-        sendText(sender, getDivision(num));
-        return;
-    }
-
+	
     text = text.toLowerCase();
+	
+	words = text.split(' ');
+	for (int i = 0; i < words.length; i++) {
+		if(words[i].length <= 4 && words[i].length >= 3 && !isNaN(words[i])) {
+			setPostcode(sender, num);
+			sendText(sender, "You have set your postcode to " + num + ".");
+			sendText(sender, getDivision(num));
+			return;
+		}
+	}
 
     if (text.startsWith("division")) {
         console.log(num);
@@ -157,7 +161,7 @@ function decideResponse(sender, text) {
     }
 
     switch (text) {
-        case "what is my postcode":
+        case "what is my postcode?":
             getUser(sender, function(user) {
                 if (user == null) {
                     sendText(sender, "You have not set your postcode. You can set you postcode by simply sending it to me.")
@@ -166,11 +170,11 @@ function decideResponse(sender, text) {
                 }
             });
             break;
-        case "what happened today":
+        case "what happened today?":
             happening(sender);
             break;
         default:
-            sendText(sender, "Sorry i don't understand that.");
+            sendText(sender, "Sorry I don't understand that.");
     }
 }
 
