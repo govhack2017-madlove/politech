@@ -2,30 +2,48 @@ let obj = require("C:\\Users\\Reuben\\Documents\\Politech\\politech\\reps.json")
 
 let past100 = require("C:\\Users\\Reuben\\Documents\\Politech\\politech\\past100.json");
 
-/*var request = require('request');
-request('https://theyvoteforyou.org.au/api/v1/divisions.json?key=qB79nIe4HcQHOKGHrj6o', 
-	getJSON);
-*/
+var request = require('request');
+
 /*
 for (var exKey in obj) {
 	console.log("key:" +exKey+", value:"+obj[exKey]);
 }
 */
 //getDescription(obj);
-//getDivisionResult(obj, "Malcolm", "Turnbull");
+//getDivisionResult(obj, "Wentworth");
 //getDescription(obj);
-console.log(getDivision("2017-06-21"));
+//console.log(getDivision("2017-06-21"));
+
+getDivisionResultFilename('https://theyvoteforyou.org.au/api/v1/divisions/3000.json?key=qB79nIe4HcQHOKGHrj6o', 'Macarthur', print);
 
 function getJSON(error, response, body){
 	json = JSON.parse(body);
-	console.log(json);
+	getDivisionResult(json)
 }
 
 function getDescription(jsonFile){
 	console.log(obj.summary);
 }
 
+function getDivisionResultFilename(fileName, electorateName, callback) {
+	request(fileName, function(err, res, body) {
+		json = JSON.parse(body);
+		callback(getDivisionResult(json,electorateName));
+	});
+}
 
+function print(answer) {
+	console.log("They voted:" + answer);
+}
+
+function getDivisionResult(jsonFile, electorateName) {
+	for (var key in jsonFile.votes){
+		if (jsonFile.votes[key].member.electorate == electorateName) {
+			return jsonFile.votes[key].vote;
+		}	
+	}
+}
+/*
 function getDivisionResult(jsonFile, firstName, secondName){
 	for (var key in jsonFile.votes){
 		if (jsonFile.votes[key].member.first_name == firstName &&
@@ -38,7 +56,7 @@ function getDivisionResult(jsonFile, firstName, secondName){
 	//console.log(jsonFile.votes["100"].member.first_name);
 	
 }
-
+*/
 function getDivision(dateString) {
 	let ids = [];
 	let names = [];
