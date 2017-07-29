@@ -10,6 +10,7 @@ const app = express();
 
 // mongodb
 let User = require('./models/users');
+let Approval = require('./models/approvals');
 
 let mongoOptions = {
     server: {
@@ -63,6 +64,8 @@ app.post('/webhook/', function(req, res) {
             console.log(event, sender, text);
             if (event.message.is_echo) {
                 // do nothing
+            } if (event.postback) {
+                decidePostback(sender, event.postback.payload);
             } else {
                 decideResponse(sender, text);
             }
@@ -123,6 +126,40 @@ function sendTextLink(sender, text, buttons) {
             console.log("response body error");
         }
     });
+}
+
+function decidePostback(sender, payload) {
+    // [YES|NO]_[DATE]_[NUM]
+    let data = payload.split(" ");
+    User.findOne({userid: sender}, function(err, user) {
+       if (err) console.log(err);
+       if (!user) {
+           console.log("No User");
+       } else {
+           Approval.findOne({electorate: user.division, date: data[1], number: data[2]}, function(err, approval) {
+               if (err) console.log(err);
+               if (!approval) {
+                   let approval = new Approval({electorate: user.division, date: data[1], number: data[2]});
+                   if (data[0] == "YES") {
+                       approval.yes = 1;
+                   } else {
+                       approval.no = 1;
+                   }
+                   approval.save(function(err) {
+                       if (err) console.log(err);
+                   })
+               } else {
+                   if (data[0] == "YES") {
+                       approval.yes += 1;
+                   } else {
+                       approval.no += 1;
+                   }
+               }
+           })
+       }
+
+    });
+
 }
 
 function postcodeTest(sender) {
@@ -295,12 +332,12 @@ function happening(sender, dateString) {
                                     },
                                     {
                                         "type": "postback",
-                                        "payload": "DEVELOPER_APPROVE_2017-06-21_" + number,
+                                        "payload": "YES_" + dateString + "_" + number,
                                         "title": "Approve",
                                     },
                                     {
                                         "type": "postback",
-                                        "payload": "DEVELOPER_DISAPPROVE_2017-06-21_" + number,
+                                        "payload": "NO_" + dateString + "_" + number,
                                         "title": "Disapprove",
                                     }
                                 ]);
