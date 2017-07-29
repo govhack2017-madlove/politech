@@ -173,7 +173,7 @@ function decideResponse(sender, text) {
             break;
 		case "what happened today":
         case "what happened today?":
-            happening(sender);
+            happening(sender, "2017-06-21");
             break;
         default:
             sendText(sender, "Sorry I don't understand that.");
@@ -205,9 +205,9 @@ function getDivisions(dateString, callback) {
 
 }
 
-function happening(sender) {
+function happening(sender, dateString) {
     // TODO chagne hardcode
-    getDivisions("2017-06-21", function(urls) {
+    getDivisions(dateString, function(urls) {
 
         let divs = [];
         let promises = [];
