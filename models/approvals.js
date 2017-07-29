@@ -26,6 +26,6 @@ let approvalSchema = new mongoose.Schema({
 
 });
 
-let User = mongoose.model("Approval", approvalSchema);
+let Approval = mongoose.model("Approval", approvalSchema);
 
 module.exports = Approval;
