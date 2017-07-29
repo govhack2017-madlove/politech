@@ -160,6 +160,16 @@ function decideResponse(sender, text) {
         return;
     }
 
+    let re = /what happened on (\d\d)[\/\-_](\d\d)[]\/\-_](\d\d\d\d)/;
+
+    let matches = text.match(re);
+
+    if (matches.length != 0) {
+        let dateString = matches[3] + '-' + matches[2] + '-' + matches[1];
+        happening(sender, dateString);
+        return;
+    }
+
     switch (text) {
 		case "what is my postcode":
         case "what is my postcode?":
@@ -258,11 +268,11 @@ function happening(sender, dateString) {
                                 let ayes = div.aye_votes;
                                 let nos = div.no_votes;
                                 let percentage = Math.round(ayes/(nos+ayes) * 100);
-                                let message = member + "voted" + vote + " on " + title + ". ";
+                                let message = member + " voted " + vote + " on " + title + ". ";
                                 if (ayes >= nos) {
-                                    message = member + "voted" + vote + " on " + title + ". " + "The division passed with " + percentage + "\%.";
+                                    message = member + " voted " + vote + " on " + title + ". " + "The division passed with " + percentage + "\%.";
                                 } else {
-                                    message = member + "voted" + vote + " on " + title + ". " + "The division failed with " + percentage + "\%.";
+                                    message = member + " voted " + vote + " on " + title + ". " + "The division failed with " + percentage + "\%.";
                                 }
                                 sendTextLink(sender, message, [
                                     {
