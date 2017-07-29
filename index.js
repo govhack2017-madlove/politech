@@ -116,7 +116,7 @@ function decideResponse(sender, text) {
 
     switch (text) {
         case "what is my postcode":
-            let postcode = postcode(sender);
+            let postcode = getPostcode(sender);
             if (postcode == null) {
                 sendText(sender, "You have not set your postcode. You can set you postcode by simply sending it to me.")
             } else {
@@ -127,7 +127,7 @@ function decideResponse(sender, text) {
     }
 }
 
-function postcode(sender) {
+function getPostcode(sender) {
     User.findOne({userid: sender}, function(err, user) {
         if (err) console.log(err);
         if (!user) {
