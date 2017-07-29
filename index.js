@@ -247,7 +247,7 @@ function happening(sender) {
                                 let number = div.number;
                                 let ayes = div.aye_votes;
                                 let nos = div.no_votes;
-                                let percentage = ayes/nos * 100;
+                                let percentage = Math.round(ayes/(nos+ayes) * 100);
                                 let message = member + "voted" + vote + " on " + title + ". ";
                                 if (ayes >= nos) {
                                     message += "The division passed with " + percentage + "\%.";
