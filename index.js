@@ -170,6 +170,7 @@ function decideResponse(sender, text) {
     if (matches.length != 0) {
         let dateString = matches[3] + '-' + matches[2] + '-' + matches[1];
         happening(sender, dateString);
+        console.log(matches.length);
         return;
     }
 
