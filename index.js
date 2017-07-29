@@ -61,7 +61,12 @@ app.post('/webhook/', function(req, res) {
         if (event.message && event.message.text) {
             let text = event.message.text;
             console.log(event, sender, text);
-            decideResponse(sender, text);
+            if (event.message.is_echo) {
+                // do nothing
+            } else {
+                decideResponse(sender, text);
+            }
+
             /*
             if (text.length == 4) {
                 postcodeTest(sender);
@@ -113,7 +118,7 @@ function decideResponse(sender, text) {
     if (text.length == 4 && num > 999) {
         setPostcode(sender, num);
         sendText(sender, "You have set your postcode to " + num + ".");
-        sendText(sender, getDivisions(num));
+        sendText(sender, getDivision(num));
         return;
     }
 
