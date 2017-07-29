@@ -193,6 +193,7 @@ function happening(sender) {
                 let title = div.name;
 
                 for (let j = 0; j < div.votes; j++) {
+                    console.log(div.votes[i].member.electorate);
                     if (div.votes[i].member.electorate == "Wentworth") {
                         console.log(div.votes[i]);
                         let member = div.votes[i].member.first_name + " " + div.votes[i].member.last_name;
