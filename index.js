@@ -4,7 +4,7 @@ const bodyParser = require('body-parser');
 const request = require('request');
 require('dotenv').config();
 
-let divisions = require("./division2.json");
+let divisions = require("./divisions2.json");
 
 const app = express();
 
