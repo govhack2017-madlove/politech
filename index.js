@@ -113,6 +113,7 @@ function decideResponse(sender, text) {
     if (text.length == 4 && num > 999) {
         setPostcode(sender, num);
         sendText(sender, "You have set your postcode to " + num + ".");
+        sendText(sender, getDivisions(postcode));
         return;
     }
 
@@ -129,8 +130,7 @@ function decideResponse(sender, text) {
                 if (postcode == null) {
                     sendText(sender, "You have not set your postcode. You can set you postcode by simply sending it to me.")
                 } else {
-                    // sendText(sender, "Your postcode is " + postcode + ".");
-                    sendText(sender, "TESTING");
+                    sendText(sender, "Your postcode is " + postcode + ".");
                 }
             });
             break;
