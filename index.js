@@ -194,16 +194,25 @@ function happening(sender) {
 
                 let title = div.name;
 
-                for (let j = 0; j < div.votes.length; j++) {
-                    console.log(div.votes[j].member.electorate);
-                    if (div.votes[j].member.electorate == "Wentworth") {
-                        console.log(div.votes[j]);
-                        let member = div.votes[j].member.first_name + " " + div.votes[j].member.last_name;
-                        let vote = div.votes[j].vote;
-                        sendText(sender, member + "voted " + vote + " on " + title + ".");
-                        break;
+                User.findOne({userid: sender}, function(err, user) {
+                    if (err) console.log(err);
+                    if (!user) {
+                        // break;
+                    } else {
+                        for (let j = 0; j < div.votes.length; j++) {
+                            console.log(div.votes[j].member.electorate);
+                            if (div.votes[j].member.electorate == user.division) {
+                                console.log(div.votes[j]);
+                                let member = div.votes[j].member.first_name + " " + div.votes[j].member.last_name;
+                                let vote = div.votes[j].vote;
+                                sendText(sender, member + " voted " + vote + " on " + title + ".");
+                                break;
+                            }
+                        }
                     }
-                }
+                });
+
+
 
 
             }
