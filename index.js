@@ -194,17 +194,16 @@ function happening(sender) {
 
                 let title = div.name;
 
-                let member = null;
-                let vote = null;
-
                 for (let j = 0; j < div.votes; j++) {
                     if (div.votes[i].member.electorate = hardcode) {
-                        member = div.votes[i].member.first_name + " " + div.votes[i].member.last_name;
-                        vote = div.votes[i].vote;
+                        let member = div.votes[i].member.first_name + " " + div.votes[i].member.last_name;
+                        let vote = div.votes[i].vote;
+                        sendText(sender, member + "voted " + vote + " on " + title + ".");
+                        break;
                     }
                 }
 
-                sendText(sender, member + "voted " + vote + " on " + title + ".");
+
             }
 
         })
