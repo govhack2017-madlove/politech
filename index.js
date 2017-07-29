@@ -164,7 +164,7 @@ function decideResponse(sender, text) {
         return;
     }
 
-    let re = /what happened on (\d\d)[\/\-_](\d\d)[]\/\-_](\d\d\d\d)/;
+    let re = /what happened on (\d\d)[\/\-_](\d\d)[]\/\-_](\d\d\d\d)/g;
 
     let matches = text.match(re);
 
