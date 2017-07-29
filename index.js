@@ -194,8 +194,13 @@ function decideResponse(sender, text) {
         case "what happened yesterday?":
             happening(sender, "2017-06-20");
             break;
+		case "help":
+			sendText("Type what is my postcode? to return your current postcode."
+						+ "\nType your postcode xxxx to set your current electorate\n");
+			sendText("Type what happened on dd/mm/yy to return what happened on a recent day." +
+						"\nType what happened yesterday/today? to find out what happened yesterday.");
         default:
-            sendText(sender, "Sorry I don't understand that.");
+            sendText(sender, "Sorry I don't understand that. Type \"help\" for assistance");
     }
 }
 
