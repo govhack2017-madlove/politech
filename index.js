@@ -130,7 +130,7 @@ function sendTextLink(sender, text, buttons) {
 
 function decidePostback(sender, payload) {
     // [YES|NO]_[DATE]_[NUM]
-    let data = payload.split(" ");
+    let data = payload.split("_");
     User.findOne({userid: sender}, function(err, user) {
        if (err) console.log(err);
        if (!user) {
