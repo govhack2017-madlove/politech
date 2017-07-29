@@ -150,9 +150,10 @@ function decideResponse(sender, text) {
 		if(words[i].length <= 4 && words[i].length >= 3 && !isNaN(words[i])) {
 			let num = parseInt(words[i]);
 			if(setPostcode(sender, num) == null) {
-				sendText(sender, "Invalid postcode");
+				sendText(sender, "Invalid postcode, please enter the correct one.");
+			} else {
+				sendText(sender, "You have set your postcode to " + num + ". You are in the " + getDivision(num) + " division.");
 			}
-			sendText(sender, "You have set your postcode to " + num + ". You are in the " + getDivision(num) + " division.");
 			return;
 		}
 	}
