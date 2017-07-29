@@ -197,7 +197,7 @@ function happening(sender) {
                 let member = null;
                 let vote = null;
 
-                for (let j = 0; j < div.votes) {
+                for (let j = 0; j < div.votes; j++) {
                     if (div.votes[i].member.electorate = hardcode) {
                         member = div.votes[i].member.first_name + " " + div.votes[i].member.last_name;
                         vote = div.votes[i].vote;
