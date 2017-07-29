@@ -131,14 +131,14 @@ function decideResponse(sender, text) {
     }
 }
 
-function getPostcode(sender) {
+function getPostcode(sender, callback) {
     User.findOne({userid: sender}, function(err, user) {
         if (err) console.log(err);
         if (!user) {
-            return null;
+            callback(null);
         } else {
             console.log(user.postcode);
-            return user.postcode;
+            callback(user.postcode);
         }
     })
 }
