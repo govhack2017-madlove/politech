@@ -98,7 +98,7 @@ function sendText(sender, text) {
     });
 }
 
-function sendTextLink(sender, text, link, url) {
+function sendTextLink(sender, text, buttons) {
     request({
         url: "https://graph.facebook.com/v2.6/me/messages?access_token=" + access_token,
         method: "POST",
@@ -110,13 +110,7 @@ function sendTextLink(sender, text, link, url) {
                         "payload":{
                         "template_type":"button",
                             "text": text,
-                            "buttons":[
-                            {
-                                "type":"web_url",
-                                "url": url,
-                                "title": link
-                            }
-                        ]
+                            "buttons": buttons
                     }
                 }
     }
@@ -251,7 +245,23 @@ function happening(sender) {
                                 let member = div.votes[j].member.first_name + " " + div.votes[j].member.last_name;
                                 let vote = div.votes[j].vote;
                                 let number = div.number;
-                                sendTextLink(sender, member + " voted " + vote + " on " + title + ".", "See More", "https://theyvoteforyou.org.au/divisions/representatives/2017-06-21/" + number);
+                                sendTextLink(sender, member + " voted " + vote + " on " + title + ".", [
+                                    {
+                                        "type": "web_url",
+                                        "url": "https://theyvoteforyou.org.au/divisions/representatives/2017-06-21/" + number,
+                                        "title": "See More",
+                                    },
+                                    {
+                                        "type": "postback",
+                                        "payload": "DEVELOPER_APPROVE_2017-06-21_" + number,
+                                        "title": "Approve",
+                                    },
+                                    {
+                                        "type": "postback",
+                                        "payload": "DEVELOPER_DISAPPROVE_2017-06-21_" + number,
+                                        "title": "Disapprove",
+                                    }
+                                ]);
                                 break;
                             }
                         }
