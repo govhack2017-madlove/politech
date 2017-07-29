@@ -4,6 +4,8 @@ const bodyParser = require('body-parser');
 const request = require('request');
 require('dotenv').config();
 
+let divisions = require("./division2.json");
+
 const app = express();
 
 // mongodb
@@ -116,6 +118,11 @@ function decideResponse(sender, text) {
 
     text = text.toLowerCase();
 
+    if (text.startsWith("division")) {
+        console.log(num);
+        return;
+    }
+
     switch (text) {
         case "what is my postcode":
             getPostcode(sender, function(postcode) {
@@ -123,12 +130,17 @@ function decideResponse(sender, text) {
                     sendText(sender, "You have not set your postcode. You can set you postcode by simply sending it to me.")
                 } else {
                     sendText(sender, "Your postcode is " + postcode + ".");
+                    sendText(sender, getDivisions(postcode));
                 }
             });
             break;
         default:
             sendText(sender, "Sorry i don't understand that.")
     }
+}
+
+function getDivisions(postcode) {
+    return JSON.stringify(divisions[postcode]);
 }
 
 function getPostcode(sender, callback) {

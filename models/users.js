@@ -9,6 +9,9 @@ let userSchema = new mongoose.Schema({
     postcode: {
         type: Number,
         required: true
+    },
+    division: {
+        type: String
     }
 });
 
