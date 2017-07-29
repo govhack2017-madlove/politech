@@ -7,9 +7,9 @@ for (let i = 0; i < ojson.length; i++) {
     let pc = ojson[i].Postcode;
     let div = ojson[i].Division;
     if (!njson[pc]) {
-        njson[pc] = [];
+        njson[pc] = {};
     }
-    njson[pc].push({[div]: ojson[i].Percent});
+    njson[pc][div] = ojson[i].Percent;
 }
 
 let data = JSON.stringify(njson);
