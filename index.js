@@ -149,7 +149,8 @@ function decideResponse(sender, text) {
 	for (var i = 0; i < words.length; i++) {
 		if(words[i].length <= 4 && words[i].length >= 3 && !isNaN(words[i])) {
 			let num = parseInt(words[i]);
-			if(setPostcode(sender, num) == null) {
+			if(getDivision(num) == null) {
+				setPostcode(sender, num);
 				sendText(sender, "Invalid postcode, please enter the correct one.");
 			} else {
 				sendText(sender, "You have set your postcode to " + num + ". You are in the " + getDivision(num) + " division.");
@@ -170,7 +171,10 @@ function decideResponse(sender, text) {
     if (matches !=  null) {
         let dateString = matches[3] + '-' + matches[2] + '-' + matches[1];
         happening(sender, dateString);
+<<<<<<< Updated upstream
         
+=======
+>>>>>>> Stashed changes
         return;
     }
 
@@ -357,10 +361,6 @@ function getUser(sender, callback) {
 
 function setPostcode(sender, postcode) {
     let division = getDivision(postcode);
-	
-	if(division == null) {
-		return null;
-	}
 	
     division = division ? division : "none";
     User.findOne({userid: sender}, function(err, user) {
