@@ -215,9 +215,21 @@ function happening(sender) {
         Promise.all(promises).then(values => {
 
             console.log("HERE");
+            let a = values.length;
 
-            for (let i = 0; i < values.length; i++) {
+            let goodValues = []
+
+            for (let i = 0; i < a; i++) {
                 let div = values[i];
+                if (!div.name.startsWith("Motion")
+                    && div.name.indexOf("Second Reading") == -1) {
+                    goodValues.push(values[i]);
+                }
+            }
+
+
+            for (let i = 0; i < goodValues.length; i++) {
+                let div = goodValues[i];
 
                 let title = div.name;
 
