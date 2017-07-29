@@ -21,8 +21,15 @@ function getJSON(error, response, body){
 	getDivisionResult(json)
 }
 
-function getDescription(jsonFile){
-	console.log(obj.summary);
+function getDescription(jsonFile, attribute){
+	return jsonFile.attribute;
+}
+
+function getAttribute(fileName, attribute, callback) {
+    request(fileName, function(err, res, body) {
+        json = JSON.parse(body);
+        callback(getDescription(json, attribute));
+    });
 }
 
 function getDivisionResultFilename(fileName, electorateName, callback) {

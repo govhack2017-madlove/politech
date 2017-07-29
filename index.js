@@ -139,9 +139,54 @@ function decideResponse(sender, text) {
                 }
             });
             break;
+        case "what happened today":
+            happening(sender);
+            break;
         default:
             sendText(sender, "Sorry i don't understand that.");
     }
+}
+
+function getDivisions(dateString) {
+    let ids = [];
+    let names = [];
+    for (var key in past100) {
+        if(past100[key].date == dateString) {
+            ids.push(past100[key].id);
+            names.push(past100[key].name);
+        }
+    }
+    let urls = [];
+    for (var id in ids) {
+        urls.push("https://theyvoteforyou.org.au/api/v1/divisions/" + ids[id] + ".json?key=qB79nIe4HcQHOKGHrj6o");
+    }
+
+    return urls;
+
+}
+
+function happening(sender) {
+    // TODO chagne hardcode
+    let urls = getDivisions("2017-06-21");
+    let divs = [];
+    let promises = [];
+    for (let i = 0; i < urls.length; i++) {
+        promises.push(new Promise((resolve, reject) => {
+            getAttribute(urls[i], "name", resolve);
+        }));
+
+    }
+
+    Promise.all(promises).then(values => {
+        sendText(sender, values.toString());
+    })
+}
+
+function getAttribute(fileName, attribute, callback) {
+    request(fileName, function(err, res, body) {
+        json = JSON.parse(body);
+        callback(json[attribute]);
+    });
 }
 
 function getDivision(postcode) {
