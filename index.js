@@ -106,13 +106,15 @@ function postcodeTest(sender) {
 }
 
 function decideResponse(sender, text) {
-    text = text.toLowerCase();
-
     // check if postcode entered
-    if (text.length == 4 && +text > 999 && +text < 10000) {
-        setPostcode(sender, +text);
+    let num = parseInt(text);
+    if (text.length == 4 && num > 999) {
+        setPostcode(sender, num);
+        sendText(sender, "You have set your postcode to " + num + ".");
         return;
     }
+
+    text = text.toLowerCase();
 
     switch (text) {
         case "what is my postcode":
@@ -122,6 +124,7 @@ function decideResponse(sender, text) {
             } else {
                 sendText(sender, "Your postcode is " + postcode + ".");
             }
+            break;
         default:
             sendText(sender, "Sorry i don't understand that.")
     }
