@@ -139,6 +139,8 @@ function decidePostback(sender, payload) {
            Approval.findOne({electorate: user.division, date: data[1], number: data[2]}, function(err, approval) {
                if (err) console.log(err);
                if (!approval) {
+                   console.log(user.division, data);
+                   sendText(sender, data);
                    let approval = new Approval({electorate: user.division, date: data[1], number: data[2]});
                    if (data[0] == "YES") {
                        approval.yes = 1;
@@ -154,6 +156,9 @@ function decidePostback(sender, payload) {
                    } else {
                        approval.no += 1;
                    }
+                   approval.save(function(err) {
+                       if (err) console.log(err);
+                   })
                }
            })
        }
