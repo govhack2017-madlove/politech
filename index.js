@@ -99,21 +99,27 @@ function sendText(sender, text) {
 }
 
 function sendTextLink(sender, text, link, url) {
-    let messageData = {text: text};
     request({
         url: "https://graph.facebook.com/v2.6/me/messages?access_token=" + access_token,
         method: "POST",
         json: {
             recipient: {id: sender},
-            message : messageData,
-            buttons:[
-                {
-                    "type":"web_url",
-                    "url":url,
-                    "title":link,
-                    "webview_height_ratio": "compact"
+            message: {
+                "attachment":{
+                    "type":"template",
+                        "payload":{
+                        "template_type":"button",
+                            "text": text,
+                            "buttons":[
+                            {
+                                "type":"web_url",
+                                "url": url,
+                                "title": link
+                            }
+                        ]
+                    }
                 }
-            ]
+    }
         }
     }, function(error, response, body) {
         if (error) {
