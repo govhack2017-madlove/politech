@@ -151,7 +151,7 @@ function decideResponse(sender, text) {
 			let num = parseInt(words[i]);
 			setPostcode(sender, num);
 			sendText(sender, "You have set your postcode to " + num + ".");
-			sendText(sender, getDivision(num));
+			sendText(sender, "You are in the " + getDivision(num) + " division.");
 			return;
 		}
 	}
@@ -162,6 +162,7 @@ function decideResponse(sender, text) {
     }
 
     switch (text) {
+		case "what is my postcode":
         case "what is my postcode?":
             getUser(sender, function(user) {
                 if (user == null) {
@@ -171,6 +172,7 @@ function decideResponse(sender, text) {
                 }
             });
             break;
+		case "what happened today":
         case "what happened today?":
             happening(sender);
             break;
