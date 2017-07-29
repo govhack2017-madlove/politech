@@ -4,6 +4,8 @@ const bodyParser = require('body-parser');
 const request = require('request');
 require('dotenv').config();
 
+let divisions = require("./divisions2.json");
+
 const app = express();
 
 // mongodb
@@ -59,7 +61,12 @@ app.post('/webhook/', function(req, res) {
         if (event.message && event.message.text) {
             let text = event.message.text;
             console.log(event, sender, text);
-            decideResponse(sender, text);
+            if (event.message.is_echo) {
+                // do nothing
+            } else {
+                decideResponse(sender, text);
+            }
+
             /*
             if (text.length == 4) {
                 postcodeTest(sender);
@@ -111,47 +118,72 @@ function decideResponse(sender, text) {
     if (text.length == 4 && num > 999) {
         setPostcode(sender, num);
         sendText(sender, "You have set your postcode to " + num + ".");
+        sendText(sender, getDivision(num));
         return;
     }
 
     text = text.toLowerCase();
 
+    if (text.startsWith("division")) {
+        console.log(num);
+        return;
+    }
+
     switch (text) {
         case "what is my postcode":
-            let postcode = getPostcode(sender);
-            if (postcode == null) {
-                sendText(sender, "You have not set your postcode. You can set you postcode by simply sending it to me.")
-            } else {
-                sendText(sender, "Your postcode is " + postcode + ".");
-            }
+            getUser(sender, function(user) {
+                if (user == null) {
+                    sendText(sender, "You have not set your postcode. You can set you postcode by simply sending it to me.")
+                } else {
+                    sendText(sender, "Your postcode is " + user.postcode + " and your division is " + user.division + ".");
+                }
+            });
             break;
         default:
-            sendText(sender, "Sorry i don't understand that.")
+            sendText(sender, "Sorry i don't understand that.");
     }
 }
 
-function getPostcode(sender) {
+function getDivision(postcode) {
+    let div = divisions[postcode.toString()];
+    let max = 0;
+    let division = null;
+    for (let property in div) {
+        if (div.hasOwnProperty(property)) {
+            if (div[property] > max) {
+                max = div[property];
+                division = property;
+            }
+        }
+    }
+
+    return division;
+}
+
+function getUser(sender, callback) {
     User.findOne({userid: sender}, function(err, user) {
         if (err) console.log(err);
         if (!user) {
-            return null;
+            callback(null);
         } else {
-            console.log(user.postcode);
-            return user.postcode;
+            callback(user);
         }
     })
 }
 
 function setPostcode(sender, postcode) {
+    let division = getDivision(postcode);
+    division = division ? division : "none";
     User.findOne({userid: sender}, function(err, user) {
         if (err) console.log(err);
         if (!user) {
-            let user = new User({userid: sender, postcode: postcode});
+            let user = new User({userid: sender, postcode: postcode, division: division});
             user.save(function (err) {
                 if (err) console.log(err);
             });
         } else {
             user.postcode = postcode;
+            user.division = division;
             user.save(function (err) {
                 if (err) console.log(err);
             })
