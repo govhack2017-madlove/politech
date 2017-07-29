@@ -149,8 +149,11 @@ function decideResponse(sender, text) {
 	for (var i = 0; i < words.length; i++) {
 		if(words[i].length <= 4 && words[i].length >= 3 && !isNaN(words[i])) {
 			let num = parseInt(words[i]);
-			setPostcode(sender, num);
-			sendText(sender, "You have set your postcode to " + num + ". You are in the " + getDivision(num) + " division.");
+			if(setPostcode(sender, num) == null) {
+				sendText(sender, "Invalid postcode, please enter the correct one.");
+			} else {
+				sendText(sender, "You have set your postcode to " + num + ". You are in the " + getDivision(num) + " division.");
+			}
 			return;
 		}
 	}
@@ -321,6 +324,11 @@ function getAttribute(fileName, attribute, callback) {
 
 function getDivision(postcode) {
     let div = divisions[postcode.toString()];
+	
+	if(div == null) {
+		return null;
+	}
+	
     let max = 0;
     let division = null;
     for (let property in div) {
@@ -348,6 +356,11 @@ function getUser(sender, callback) {
 
 function setPostcode(sender, postcode) {
     let division = getDivision(postcode);
+	
+	if(division == null) {
+		return null;
+	}
+	
     division = division ? division : "none";
     User.findOne({userid: sender}, function(err, user) {
         if (err) console.log(err);
