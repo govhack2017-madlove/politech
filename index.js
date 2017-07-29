@@ -130,7 +130,7 @@ function decideResponse(sender, text) {
                     sendText(sender, "You have not set your postcode. You can set you postcode by simply sending it to me.")
                 } else {
                     // sendText(sender, "Your postcode is " + postcode + ".");
-                    sendText(sender, getDivisions(postcode));
+                    sendText(sender, "TESTING");
                 }
             });
             break;
