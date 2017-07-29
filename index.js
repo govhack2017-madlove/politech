@@ -186,7 +186,7 @@ function happening(sender) {
         }
 
         Promise.all(promises).then(values => {
-            console.log();
+            console.log(values);
         })
 
     });
