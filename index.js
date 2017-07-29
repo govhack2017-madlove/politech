@@ -118,13 +118,13 @@ function decideResponse(sender, text) {
 
     switch (text) {
         case "what is my postcode":
-            let postcode = getPostcode(sender);
-            console.log("POSTCODE: " + postcode);
-            if (postcode == null) {
-                sendText(sender, "You have not set your postcode. You can set you postcode by simply sending it to me.")
-            } else {
-                sendText(sender, "Your postcode is " + postcode + ".");
-            }
+            getPostcode(sender, function(postcode) {
+                if (postcode == null) {
+                    sendText(sender, "You have not set your postcode. You can set you postcode by simply sending it to me.")
+                } else {
+                    sendText(sender, "Your postcode is " + postcode + ".");
+                }
+            });
             break;
         default:
             sendText(sender, "Sorry i don't understand that.")
