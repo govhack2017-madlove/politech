@@ -18,6 +18,7 @@
   "homepage": "https://github.com/govhack2017-madlove/politech#readme",
   "dependencies": {
     "body-parser": "^1.17.2",
+    "dotenv": "^4.0.0",
     "express": "^4.15.3",
     "request": "^2.81.0"
   }

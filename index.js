@@ -1,6 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const request = require('request');
+require('dotenv').config();
 
 const app = express();
 
@@ -16,12 +17,10 @@ app.get('/', function(req, res) {
     res.send("politech chatbot index page");
 });
 
-let token = "";
-
 // Facebook 
 
 app.get('/webhook/', function(req, res) {
-    if (req.query['hub.verify_token'] === "blondiebytes") {
+    if (req.query['hub.verify_token'] === process.env.FACEBOOK_TOKEN) {
         res.send(req.query['hub.challenge'])
     }
     res.send("Wrong token")
