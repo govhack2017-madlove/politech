@@ -64,7 +64,7 @@ app.post('/webhook/', function(req, res) {
             console.log(event, sender, text);
             if (event.message.is_echo) {
                 // do nothing
-            } if (event.postback) {
+            } else if (event.postback) {
                 decidePostback(sender, event.postback.payload);
             } else {
                 decideResponse(sender, text);
