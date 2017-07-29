@@ -17,10 +17,11 @@ app.get('/', function(req, res) {
     res.send("politech chatbot index page");
 });
 
-// Facebook 
+// Facebook
+let token = process.env.FACEBOOK_TOKEN;
 
 app.get('/webhook/', function(req, res) {
-    if (req.query['hub.verify_token'] === process.env.FACEBOOK_TOKEN) {
+    if (req.query['hub.verify_token'] === token) {
         res.send(req.query['hub.challenge'])
     }
     res.send("Wrong token")
