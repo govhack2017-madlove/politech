@@ -131,15 +131,9 @@ function postcode(sender) {
     User.findOne({userid: sender}, function(err, user) {
         if (err) console.log(err);
         if (!user) {
-            let user = new User({userid: sender, postcode: postcode});
-            user.save(function (err) {
-                if (err) console.log(err);
-            });
+            return null;
         } else {
-            user.postcode = postcode;
-            user.save(function (err) {
-                if (err) console.log(err);
-            })
+            return user.postcode;
         }
     })
 }
