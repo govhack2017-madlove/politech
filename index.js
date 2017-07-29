@@ -187,7 +187,30 @@ function happening(sender) {
 
         Promise.all(promises).then(values => {
             console.log(values);
+
+            for (let i = 0; i < values.length; i++) {
+                let hardcode = "Oxley";
+                let div = values[i];
+
+                let title = div.name;
+
+                let member = null;
+                let vote = null;
+
+                for (let j = 0; j < div.votes) {
+                    if (div.votes[i].member.electorate = hardcode) {
+                        member = div.votes[i].member.first_name + " " + div.votes[i].member.last_name;
+                        vote = div.votes[i].vote;
+                    }
+                }
+
+                sendText(sender, member + "voted " + vote + " on " + title + ".");
+            }
+
         })
+
+
+
 
     });
 
@@ -196,7 +219,7 @@ function happening(sender) {
 function getAttribute(fileName, attribute, callback) {
     request(fileName, function(err, res, body) {
         json = JSON.parse(body);
-        callback(json[attribute]);
+        callback(json);
     });
 }
 
