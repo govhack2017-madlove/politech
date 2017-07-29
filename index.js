@@ -188,11 +188,13 @@ function happening(sender) {
         Promise.all(promises).then(values => {
 
             console.log("HERE");
+            let a = values.length;
 
-            for (let i = 0; i < values.length; i++) {
+            for (let i = 0; i < a; i++) {
                 let div = values[i];
                 if (div.name.startsWith("Motion")) {
                     values.splice(i, 1);
+                    a -= 1;
                 }
             }
 
