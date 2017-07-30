@@ -480,19 +480,21 @@ function getDivision(postcode) {
 	if(div == null) {
 		return null;
 	}
-	
+	let divArray = [];
     let max = 0;
     let division = null;
     for (let property in div) {
         if (div.hasOwnProperty(property)) {
+            /*
             if (div[property] > max) {
                 max = div[property];
                 division = property;
-            }
+            } */
+            divArray.push(property);
         }
     }
 
-    return division;
+    return divArray;
 }
 
 function getUser(sender, callback) {
