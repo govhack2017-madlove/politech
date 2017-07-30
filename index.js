@@ -522,14 +522,12 @@ function getUser(sender, callback) {
     })
 }
 
-function setPostcode(sender, postcode) {
-    let division = getDivision(postcode);
-	
-    division = division ? division : "none";
+function setPostcode(sender, postcode, elec) {
+
     User.findOne({userid: sender}, function(err, user) {
         if (err) console.log(err);
         if (!user) {
-            let user = new User({userid: sender, postcode: postcode, division: division});
+            let user = new User({userid: sender, postcode: postcode, division: elec});
             user.save(function (err) {
                 if (err) console.log(err);
             });
