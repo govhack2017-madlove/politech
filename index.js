@@ -296,16 +296,16 @@ function decideResponse(sender, text) {
 						"\nType \'what happened yesterday\'? to find out what happened yesterday.");
 			break;
         default:
-            sendQuickReply(sender, "Sorry I don't understand that. Type \"help\" for assistance.", [
+            sendQuickReply(sender, "Sorry I don't understand that. Type \"help\" for assistance or see what happened:", [
                 {
                     "content_type":"text",
-                    "title":"What happened today?",
-                    "payload":"DEVELOPER_DEFINED_PAYLOAD_FOR_PICKING_RED"
+                    "title":"Today?",
+                    "payload":"QUICK_REPLY_TODAY"
                 },
                 {
                     "content_type":"text",
-                    "title":"What happened yesterday?",
-                    "payload":"DEVELOPER_DEFINED_PAYLOAD_FOR_PICKING_GREEN"
+                    "title":"Yesterday?",
+                    "payload":"QUICK_REPLY_YESTERDAY"
                 }
             ]);
     }
