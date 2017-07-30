@@ -180,6 +180,10 @@ function decidePostback(sender, payload) {
     if (payload == "GET_STARTED_PAYLOAD") {
         sendText(sender, "Welocome to RE:Member, enter your postcode to register your local MP");
         return;
+    } else if (payload == "QUICK_REPLY_TODAY") {
+        happening(sender, "2017-06-21");
+    } else if (payload == "QUICK_REPLY_YESTERDAY") {
+        happening(sender, "2017-06-20");
     }
 
     // [YES|NO]_[DATE]_[NUM]
