@@ -68,9 +68,9 @@ app.post('/webhook/', function(req, res) {
         } else if (event.message && event.message.quick_reply) {
             console.log(event.message);
             if (event.message.quick_reply.payload == "QUICK_REPLY_TODAY") {
-                happening(sender, "2017-06-21");
+                happening(sender, "2017-07-30");
             } else if (event.message.quick_reply.payload == "QUICK_REPLY_YESTERDAY") {
-                happening(sender, "2017-06-20");
+                happening(sender, "2017-07-29");
             }
         } else if (event.message && event.message.text) {
             let text = event.message.text;
