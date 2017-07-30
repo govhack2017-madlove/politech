@@ -66,6 +66,7 @@ app.post('/webhook/', function(req, res) {
             console.log(event.postback.payload);
             decidePostback(sender, event.postback.payload);
         } else if (event.message && event.message.quick_reply) {
+            console.log(event.message);
             if (event.message.quick_reply == "QUICK_REPLY_TODAY") {
                 happening(sender, "2017-06-21");
             } else if (event.message.quick_reply == "QUICK_REPLY_YESTERDAY") {
