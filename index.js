@@ -264,7 +264,7 @@ function decideResponse(sender, text) {
 			            obj.push({
                             "content_type": "text",
                             "title": arr[i],
-                            "payload": "ELEC_" + num + "_" + arr[i]
+                            "payload": "ELEC_" + num + "_" + arr[j]
                         })
                     }
 			        sendQuickReply(sender, "You have set your post to " + num + ". Choose your electorate.", obj);
