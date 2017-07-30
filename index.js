@@ -317,6 +317,7 @@ function decideResponse(sender, text) {
                     "payload":"QUICK_REPLY_YESTERDAY"
                 }
             ]);
+            break;
         default:
             sendQuickReply(sender, "Sorry I don't understand that. Type \"help\" for assistance, or see what happened:", [
                 {
