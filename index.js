@@ -299,8 +299,24 @@ function decideResponse(sender, text) {
                         + "Type \'what happened on dd/mm/yyyy\'' to return what happened on a recent day." +
 						"\nType \'what happened yesterday\'? to find out what happened yesterday.");
 			break;
+        case "Hello":
+        case "hello":
+        case "Hi":
+        case "hi":
+            sendQuickReply(sender, "Hi, welcome to RE:Member :). Type \"help\" for assistance, or see what happened:", [
+                {
+                    "content_type":"text",
+                    "title":"Today?",
+                    "payload":"QUICK_REPLY_TODAY"
+                },
+                {
+                    "content_type":"text",
+                    "title":"Yesterday?",
+                    "payload":"QUICK_REPLY_YESTERDAY"
+                }
+            ]);
         default:
-            sendQuickReply(sender, "Sorry I don't understand that. Type \"help\" for assistance or see what happened:", [
+            sendQuickReply(sender, "Sorry I don't understand that. Type \"help\" for assistance, or see what happened:", [
                 {
                     "content_type":"text",
                     "title":"Today?",
