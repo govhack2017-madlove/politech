@@ -70,7 +70,12 @@ app.post('/webhook/', function(req, res) {
             if (event.message.quick_reply.payload == "QUICK_REPLY_TODAY") {
                 happening(sender, "2017-07-30");
             } else if (event.message.quick_reply.payload == "QUICK_REPLY_YESTERDAY") {
+
                 happening(sender, "2017-07-29");
+            } else if (event.message.quick_reply.payload.startsWith("ELEC_")) {
+                let data = event.message.quick_reply.payload.split("_");
+                sendText(sender, "You have set your electorate to " + data[2] + ".");
+                setPostcode(sender, data[1], data[2]);
             }
         } else if (event.message && event.message.text) {
             let text = event.message.text;
@@ -256,15 +261,15 @@ function decideResponse(sender, text) {
 			} else {
 			    let arr = getDivision(num);
 			    if (arr.length == 1) {
-                    sendText(sender, "You have set your postcode to " + num + ". You are in the " + getDivision(num) + " division.");
-                    setPostcode(sender, num, elec);
+                    sendText(sender, "You have set your postcode to " + num + ". You are in the " + arr[0] + " electorate.");
+                    setPostcode(sender, num, arr[0]);
                 } else {
 			        let obj = [];
 			        for (let j = 0; j < arr.length; j++) {
 			            obj.push({
                             "content_type": "text",
-                            "title": arr[i],
-                            "payload": "ELEC_" + num + "_" + arr[i];
+                            "title": arr[j],
+                            "payload": "ELEC_" + num + "_" + arr[j]
                         })
                     }
 			        sendQuickReply(sender, "You have set your post to " + num + ". Choose your electorate.", obj);
@@ -304,11 +309,11 @@ function decideResponse(sender, text) {
             break;
 		case "what happened today":
         case "what happened today?":
-            happening(sender, "2017-06-21");
+            happening(sender, "2017-06-30");
             break;
         case "what happened yesterday":
         case "what happened yesterday?":
-            happening(sender, "2017-06-20");
+            happening(sender, "2017-06-29");
             break;
 		case "help":
 			sendQuickReply(sender, "Type \'what is my postcode\'? to return your current postcode."
@@ -522,20 +527,18 @@ function getUser(sender, callback) {
     })
 }
 
-function setPostcode(sender, postcode) {
-    let division = getDivision(postcode);
-	
-    division = division ? division : "none";
+function setPostcode(sender, postcode, elec) {
+
     User.findOne({userid: sender}, function(err, user) {
         if (err) console.log(err);
         if (!user) {
-            let user = new User({userid: sender, postcode: postcode, division: division});
+            let user = new User({userid: sender, postcode: postcode, division: elec});
             user.save(function (err) {
                 if (err) console.log(err);
             });
         } else {
             user.postcode = postcode;
-            user.division = division;
+            user.division = elec;
             user.save(function (err) {
                 if (err) console.log(err);
             })
