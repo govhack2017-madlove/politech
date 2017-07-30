@@ -256,8 +256,8 @@ function decideResponse(sender, text) {
 			} else {
 			    let arr = getDivision(num);
 			    if (arr.length == 1) {
-                    sendText(sender, "You have set your postcode to " + num + ". You are in the " + getDivision(num) + " division.");
-                    setPostcode(sender, num, elec);
+                    sendText(sender, "You have set your postcode to " + num + ". You are in the " + arr[0] + " division.");
+                    setPostcode(sender, num, arr[0]);
                 } else {
 			        let obj = [];
 			        for (let j = 0; j < arr.length; j++) {
