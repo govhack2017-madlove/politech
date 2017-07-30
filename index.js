@@ -71,6 +71,10 @@ app.post('/webhook/', function(req, res) {
                 happening(sender, "2017-06-21");
             } else if (event.message.quick_reply.payload == "QUICK_REPLY_YESTERDAY") {
                 happening(sender, "2017-06-20");
+            } else if (event.message.quick_reply.payload.startsWith("ELEC_")) {
+                let data = event.message.quick_reply.payload.split(" ");
+                sendText(sender, "You have set your electorate to " + data[2] + ".");
+                setPostcode(sender, data[1], data[2]);
             }
         } else if (event.message && event.message.text) {
             let text = event.message.text;
@@ -256,7 +260,7 @@ function decideResponse(sender, text) {
 			} else {
 			    let arr = getDivision(num);
 			    if (arr.length == 1) {
-                    sendText(sender, "You have set your postcode to " + num + ". You are in the " + arr[0] + " division.");
+                    sendText(sender, "You have set your postcode to " + num + ". You are in the " + arr[0] + " electorate.");
                     setPostcode(sender, num, arr[0]);
                 } else {
 			        let obj = [];
