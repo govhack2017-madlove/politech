@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 const express = require('express');
 const bodyParser = require('body-parser');
 const request = require('request');
+const moment = require('moment');
 require('dotenv').config();
 
 let divisions = require("./divisions2.json");
@@ -68,10 +69,9 @@ app.post('/webhook/', function(req, res) {
         } else if (event.message && event.message.quick_reply) {
             console.log(event.message);
             if (event.message.quick_reply.payload == "QUICK_REPLY_TODAY") {
-                happening(sender, "2017-07-30");
+                happening(sender, moment().format("YYYY-MM-DD"));
             } else if (event.message.quick_reply.payload == "QUICK_REPLY_YESTERDAY") {
-
-                happening(sender, "2017-07-29");
+                happening(sender, moment().subtract(1, 'days').format("YYYY-MM-DD"));
             } else if (event.message.quick_reply.payload.startsWith("ELEC_")) {
                 let data = event.message.quick_reply.payload.split("_");
                 sendText(sender, "You have set your electorate to " + data[2] + ".  You can type \"Hello\" or \"Help\" at anytime to find out what i can do.");
@@ -309,11 +309,11 @@ function decideResponse(sender, text) {
             break;
 		case "what happened today":
         case "what happened today?":
-            happening(sender, "2017-06-30");
+            happening(sender, moment().format("YYYY-MM-DD"));
             break;
         case "what happened yesterday":
         case "what happened yesterday?":
-            happening(sender, "2017-06-29");
+            happening(sender, moment().subtract(1, 'days').format("YYYY-MM-DD"));
             break;
 		case "help":
 			sendQuickReply(sender, "Type \'what is my postcode\'? to return your current postcode."
