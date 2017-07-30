@@ -533,7 +533,7 @@ function setPostcode(sender, postcode, elec) {
             });
         } else {
             user.postcode = postcode;
-            user.division = division;
+            user.division = elec;
             user.save(function (err) {
                 if (err) console.log(err);
             })
