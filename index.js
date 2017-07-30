@@ -105,6 +105,50 @@ function sendText(sender, text) {
     });
 }
 
+function sendQuickReply(sender, text, replies) {
+
+    request({
+        url: "https://graph.facebook.com/v2.6/me/messages?access_token=" + access_token,
+        method: "POST",
+        json: {
+            recipient: {id: sender},
+            message: {
+                text: text,
+                quick_replies: replies
+            }
+        }
+    }, function(error, response, body) {
+        if (error) {
+            console.log("sending error");
+        } else if (response.body.error) {
+            console.log(response.body.error);
+            console.log("response body error");
+        }
+    });
+/*
+    {
+        "recipient":{
+        "id":"USER_ID"
+    },
+        "message":{
+        "text":"Pick a color:",
+            "quick_replies":[
+            {
+                "content_type":"text",
+                "title":"Red",
+                "payload":"DEVELOPER_DEFINED_PAYLOAD_FOR_PICKING_RED"
+            },
+            {
+                "content_type":"text",
+                "title":"Green",
+                "payload":"DEVELOPER_DEFINED_PAYLOAD_FOR_PICKING_GREEN"
+            }
+        ]
+    }
+    }
+    */
+}
+
 function sendTextLink(sender, text, buttons) {
     request({
         url: "https://graph.facebook.com/v2.6/me/messages?access_token=" + access_token,
@@ -252,7 +296,18 @@ function decideResponse(sender, text) {
 						"\nType \'what happened yesterday\'? to find out what happened yesterday.");
 			break;
         default:
-            sendText(sender, "Sorry I don't understand that. Type \"help\" for assistance.");
+            sendQuickReply(sender, "Sorry I don't understand that. Type \"help\" for assistance.", [
+                {
+                    "content_type":"text",
+                    "title":"What happened today?",
+                    "payload":"DEVELOPER_DEFINED_PAYLOAD_FOR_PICKING_RED"
+                },
+                {
+                    "content_type":"text",
+                    "title":"What happened yesterday?",
+                    "payload":"DEVELOPER_DEFINED_PAYLOAD_FOR_PICKING_GREEN"
+                }
+            ]);
     }
 }
 
