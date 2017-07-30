@@ -147,9 +147,9 @@ function decidePostback(sender, payload) {
        } else {
            Approval.findOne({electorate: user.division, date: data[1], id: data[2]}, function(err, approval) {
                if (err) console.log(err);
+			   sendText(sender, "Your feedback will be sent to your MP.");
                if (!approval) {
                    console.log(user.division, data);
-                   sendText(sender, payload);
                    let approval = new Approval({electorate: user.division, date: data[1], id: data[2]});
                    if (data[0] == "YES") {
                        approval.yes = 1;
