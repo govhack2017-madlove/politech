@@ -296,11 +296,23 @@ function decideResponse(sender, text) {
             happening(sender, "2017-06-20");
             break;
 		case "help":
-			sendText(sender, "Type \'what is my postcode\'? to return your current postcode."
-						+ "\nType your postcode \'xxxx\'' to set your current electorate.\n"
+			sendQuickReply(sender, "Type \'what is my postcode\'? to return your current postcode."
+                        + "\nType your postcode \'xxxx\'' to set your current electorate.\n"
                         + "Type \'what happened on dd/mm/yyyy\'' to return what happened on a recent day." +
-						"\nType \'what happened yesterday\'? to find out what happened yesterday.");
-			break;
+                        "\nType \'what happened yesterday\'? to find out what happened yesterday." +
+                        "\n Or just use the quick buttons :)", [
+                {
+                    "content_type":"text",
+                    "title":"Today?",
+                    "payload":"QUICK_REPLY_TODAY"
+                },
+                {
+                    "content_type":"text",
+                    "title":"Yesterday?",
+                    "payload":"QUICK_REPLY_YESTERDAY"
+                }
+            ]);
+            break;
         case "Hello":
         case "hello":
         case "Hi":
@@ -374,7 +386,7 @@ function happening(sender, dateString) {
 
         Promise.all(promises).then(values => {
 
-            console.log("HERE");
+         //   console.log("HERE");
             let a = values.length;
 
             let goodValues = []
@@ -401,9 +413,9 @@ function happening(sender, dateString) {
                         // break;
                     } else {
                         for (let j = 0; j < div.votes.length; j++) {
-                            console.log(div.votes[j].member.electorate);
+                          //  console.log(div.votes[j].member.electorate);
                             if (div.votes[j].member.electorate == user.division) {
-                                console.log(div.votes[j]);
+                            //    console.log(div.votes[j]);
                                 let member = div.votes[j].member.first_name + " " + div.votes[j].member.last_name;
                                 let vote = div.votes[j].vote;
                                 let number = div.number;
