@@ -133,6 +133,11 @@ function sendTextLink(sender, text, buttons) {
 }
 
 function decidePostback(sender, payload) {
+    if (payload == "GET_STARTED_PAYLOAD") {
+        sendText(sender, "Welocome to RE:Member, enter your postcode to register your local MP");
+        return;
+    }
+
     // [YES|NO]_[DATE]_[NUM]
     let data = payload.split("_");
     User.findOne({userid: sender}, function(err, user) {
