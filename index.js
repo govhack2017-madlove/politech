@@ -74,7 +74,7 @@ app.post('/webhook/', function(req, res) {
                 happening(sender, "2017-07-29");
             } else if (event.message.quick_reply.payload.startsWith("ELEC_")) {
                 let data = event.message.quick_reply.payload.split("_");
-                sendText(sender, "You have set your electorate to " + data[2] + ".");
+                sendText(sender, "You have set your electorate to " + data[2] + ".  You can type \"Hello\" or \"Help\" at anytime to find out what i can do.");
                 setPostcode(sender, data[1], data[2]);
             }
         } else if (event.message && event.message.text) {
@@ -285,7 +285,7 @@ function decideResponse(sender, text) {
         return;
     }
 
-    let re = /what happened on (\d\d)[\/\-_](\d\d)[\/\-_](\d\d\d\d)/;
+    let re = /on (\d\d)[\/\-_](\d\d)[\/\-_](\d\d\d\d)/;
 
     let matches = re.exec(text);
 
@@ -303,7 +303,7 @@ function decideResponse(sender, text) {
                 if (user == null) {
                     sendText(sender, "You have not set your postcode. You can set your postcode by simply sending it to me.")
                 } else {
-                    sendText(sender, "Your postcode is " + user.postcode + " and your division is " + user.division + ".");
+                    sendText(sender, "Your postcode is " + user.postcode + " and your division is " + user.division + ". You can type \"Hello\" or \"Help\" at anytime to find out what i can do.");
                 }
             });
             break;
