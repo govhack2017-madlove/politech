@@ -263,7 +263,7 @@ function decideResponse(sender, text) {
 			        for (let j = 0; j < arr.length; j++) {
 			            obj.push({
                             "content_type": "text",
-                            "title": arr[i],
+                            "title": arr[j],
                             "payload": "ELEC_" + num + "_" + arr[j]
                         })
                     }
