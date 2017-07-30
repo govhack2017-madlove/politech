@@ -315,7 +315,7 @@ function decideResponse(sender, text) {
                         + "\nType your postcode \'xxxx\'' to set your current electorate.\n"
                         + "Type \'what happened on dd/mm/yyyy\'' to return what happened on a recent day." +
                         "\nType \'what happened yesterday\'? to find out what happened yesterday." +
-                        "\n Or just use the quick buttons :)", [
+                        "\n Or, use the quick buttons to find out what happened:", [
                 {
                     "content_type":"text",
                     "title":"Today?",
@@ -494,19 +494,21 @@ function getDivision(postcode) {
 	if(div == null) {
 		return null;
 	}
-	
+	let divArray = [];
     let max = 0;
     let division = null;
     for (let property in div) {
         if (div.hasOwnProperty(property)) {
+            /*
             if (div[property] > max) {
                 max = div[property];
                 division = property;
-            }
+            } */
+            divArray.push(property);
         }
     }
 
-    return division;
+    return divArray;
 }
 
 function getUser(sender, callback) {
