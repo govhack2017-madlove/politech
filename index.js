@@ -252,10 +252,24 @@ function decideResponse(sender, text) {
 		if(words[i].length <= 4 && words[i].length >= 3 && !isNaN(words[i])) {
 			let num = parseInt(words[i]);
 			if(getDivision(num) == null) {
-				setPostcode(sender, num);
 				sendText(sender, "Invalid postcode, please enter the correct one.");
 			} else {
-				sendText(sender, "You have set your postcode to " + num + ". You are in the " + getDivision(num) + " division.");
+			    let arr = getDivision(num);
+			    if (arr.length == 1) {
+                    sendText(sender, "You have set your postcode to " + num + ". You are in the " + getDivision(num) + " division.");
+                    setPostcode(sender, num, elec);
+                } else {
+			        let obj = [];
+			        for (let j = 0; j < arr.length; j++) {
+			            obj.push({
+                            "content_type": "text",
+                            "title": arr[i],
+                            "payload": "ELEC_" + num + "_" + arr[i];
+                        })
+                    }
+			        sendQuickReply(sender, "You have set your post to " + num + ". Choose your electorate.", obj);
+                }
+
 			}
 			return;
 		}
