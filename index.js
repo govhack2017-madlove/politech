@@ -72,7 +72,7 @@ app.post('/webhook/', function(req, res) {
             } else if (event.message.quick_reply.payload == "QUICK_REPLY_YESTERDAY") {
                 happening(sender, "2017-06-20");
             } else if (event.message.quick_reply.payload.startsWith("ELEC_")) {
-                let data = event.message.quick_reply.payload.split(" ");
+                let data = event.message.quick_reply.payload.split("_");
                 sendText(sender, "You have set your electorate to " + data[2] + ".");
                 setPostcode(sender, data[1], data[2]);
             }
